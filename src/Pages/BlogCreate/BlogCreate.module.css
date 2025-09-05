@@ -1,0 +1,43 @@
+.blogCreate {
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.blogCreateContent {
+    width: 100%;
+    max-width: 900px;
+}
+
+.blogCreateTitle {
+    margin-bottom: 16px;
+}
+
+.blogCreateTitleInput {
+    display: block;
+    width: 100%;
+
+    padding: 16px;
+    font-size: 24px;
+    font-weight: 600;
+
+    border: none;
+    outline: none;
+
+    border-radius: 4px;
+}
+
+.blogCreatePublishBtn {
+    margin-top: 16px;
+
+    outline: none;
+    border: none;
+
+    padding: 8px 16px;
+
+    color: #fff;
+    background-color: #3b49df;
+    border-radius: 4px;
+
+    font-weight: 600;
+}
