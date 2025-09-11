@@ -1,9 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import BlogEditor from "../../Components/BlogEditor/BlogEditor";
 import styles from './BlogCreate.module.css';
+import { useNavigate } from "react-router";
 
 function BlogCreate() {
     const editorRef = useRef(null);
+
+    const [title, setTitle] = useState();
+
+    const navigate = useNavigate();
 
     async function getHtmlContent() {
         const content = editorRef.current.getContent().split("\n").join('');
@@ -27,19 +32,22 @@ function BlogCreate() {
                 "Authorization": localStorage.getItem('token'),
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ title: "Post title", "content": (replacedContent === null) ? content : replacedContent }),
+            body: JSON.stringify({ title: title, "content": (replacedContent === null) ? content : replacedContent }),
         });
+
+        navigate("/");
     }
 
     return <div className={styles.blogCreate}>
-        <div className={styles.blogCreateContent}>
+        <form action={getHtmlContent} className={styles.blogCreateForm}>
             <div className={styles.blogCreateTitle}>
                 <input type="text" id="blogTitle"
-                    className={styles.blogCreateTitleInput} placeholder="New post title here..." />
+                    className={styles.blogCreateTitleInput} placeholder="New post title here..."
+                    onChange={(e) => setTitle(e.target.value)} />
             </div>
             <BlogEditor editorRef={editorRef} />
-            <button onClick={getHtmlContent} className={styles.blogCreatePublishBtn} type="button">Publish</button>
-        </div>
+            <button className={styles.blogCreatePublishBtn}>Publish</button>
+        </form>
     </div>;
 }
 
