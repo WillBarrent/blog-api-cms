@@ -32,6 +32,12 @@
     font-weight: 300;
 }
 
+.dashboardPostsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 .dashboardPostsTitle {
     margin-bottom: 16px;
 }
@@ -57,4 +63,6 @@
     color: #fff;
     background-color: #3b49df;
     border-radius: 4px;
+
+    cursor: pointer;
 }

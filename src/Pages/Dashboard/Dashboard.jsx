@@ -1,6 +1,29 @@
+import { useEffect, useState } from "react";
+import BlogCard from "../../Components/BlogCard/BlogCard";
 import styles from "./Dashboard.module.css";
+import { Link } from "react-router";
 
 function Dashboard() {
+  const [posts, setPosts] = useState("");
+
+  useEffect(() => {
+    let ignore = false;
+
+    fetch("http://localhost:3000/api/posts", {
+      mode: "cors",
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        if (!ignore) {
+          setPosts(data.posts);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardContent}>
@@ -22,15 +45,36 @@ function Dashboard() {
         <div className={styles.dashboardPosts}>
           <h2 className={styles.dashboardPostsTitle}>Posts</h2>
           <div className={styles.dashboardPostsSection}>
-            <div className={styles.dashboardPostsNotFound}>
-              <div className={styles.dashboardPostsNotFoundTitle}>
-                This is where you can manage your posts, but you haven't written
-                anything yet.
+            {posts === "" ? (
+              <div className={styles.dashboardPostsNotFound}>
+                <div className={styles.dashboardPostsNotFoundTitle}>
+                  This is where you can manage your posts, but you haven't
+                  written anything yet.
+                </div>
+                <Link to="/create-blog">
+                  <button className={styles.dashboardPostsCreateBtn}>
+                    Write your first post now
+                  </button>
+                </Link>
               </div>
-              <button className={styles.dashboardPostsCreateBtn}>
-                Write your first post now
-              </button>
-            </div>
+            ) : (
+              posts.map((post) => {
+                const createdAt = new Date(post.createdAt);
+                const date = createdAt.getDate();
+                const getMonth = createdAt.getMonth() + 1;
+                const getYear = createdAt.getFullYear();
+
+                return (
+                  <BlogCard
+                    title={post.title}
+                    createdAt={`${date}/${
+                      getMonth % 10 === getMonth ? `0${getMonth}` : getMonth
+                    }/${getYear}`}
+                    postId={post.id}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
