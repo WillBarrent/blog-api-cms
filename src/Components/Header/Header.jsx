@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styles from "./Header.module.css";
 import { Search } from "lucide-react";
 
@@ -9,7 +10,7 @@ function Header() {
           <div>DEV</div>
         </h1>
         <div className={styles.headerActions}>
-          <div className={styles.headerCreatePostBtn}>Create post</div>
+          <Link to="/create-blog" className={styles.headerCreatePostBtn}>Create post</Link>
         </div>
       </div>
     </header>

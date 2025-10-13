@@ -14,7 +14,7 @@
   max-width: 900px;
 
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
 
   gap: 20px;
@@ -40,7 +40,6 @@
 }
 
 .headerCreatePostBtn {
-  height: 100%;
 
   display: flex;
   align-items: center;
@@ -51,5 +50,8 @@
 
   color: #3b49df;
   background-color: transparent;
+
   padding: 4px 8px;
+
+  font-size: 24px;
 }
