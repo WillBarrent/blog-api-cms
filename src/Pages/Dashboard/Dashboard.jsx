@@ -24,6 +24,23 @@ function Dashboard() {
     };
   }, []);
 
+  async function deletePost(postId) {
+    await fetch("http://localhost:3000/api/posts/" + postId, {
+      method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    const updatedPosts = posts.filter((post) => {
+      if (post.id !== postId) {
+        return post;
+      }
+    });
+
+    setPosts(updatedPosts);
+  }
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardContent}>
@@ -36,7 +53,7 @@ function Dashboard() {
             </div>
           </div>
           <div className={styles.dashboardInformationBlock}>
-            <h1 className={styles.dashboardInformationBlockCount}>0</h1>
+            <h1 className={styles.dashboardInformationBlockCount}>{posts === "" ? 0 : posts.length}</h1>
             <div className={styles.dashboardInformationBlockTitle}>
               Total posts created
             </div>
@@ -71,6 +88,9 @@ function Dashboard() {
                       getMonth % 10 === getMonth ? `0${getMonth}` : getMonth
                     }/${getYear}`}
                     postId={post.id}
+                    isPublished={post.published}
+                    content={post.content}
+                    deletePost={deletePost}
                   />
                 );
               })
