@@ -36,14 +36,18 @@ function BlogUpdate() {
   async function updateBlog() {
     let content = editorRef.current.getContent();
 
-    const blog = await fetch("http://localhost:3000/api/posts/" + postId, {
+    await fetch("http://localhost:3000/api/posts/" + postId, {
       method: "PUT",
       mode: "cors",
       headers: {
         Authorization: localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title: title, content: content }),
+      body: JSON.stringify({
+        title: title,
+        content: content,
+        published: post.published,
+      }),
     });
 
     navigate("/");
