@@ -51,6 +51,23 @@ function Post() {
     Prism.highlightAll();
   }, [post]);
 
+  const deleteComment = async function (commentId) {
+    await fetch("http://localhost:3000/api/comments/" + commentId, {
+      method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    const updatedComments = comments.filter((comment) => {
+      if (comment.id !== commentId) {
+        return comment;
+      }
+    });
+
+    setComments(updatedComments);
+  };
+
   return (
     <div className={styles.post}>
       <div className={styles.postWrapper}>
@@ -100,10 +117,22 @@ function Post() {
                 return (
                   <div className={styles.comment}>
                     <div className={styles.commentInfo}>
-                      <div className={styles.commentAuthor}>{username}</div>
-                      <div className={styles.commentDot}></div>
-                      <div className={styles.commentCreatedAt}>
-                        {`${date} ${monthName[getMonth]}`}.
+                      <div className={styles.commentUserInfo}>
+                        <div className={styles.commentAuthor}>{username}</div>
+                        <div className={styles.commentDot}></div>
+                        <div className={styles.commentCreatedAt}>
+                          {`${date} ${monthName[getMonth]}`}.
+                        </div>
+                      </div>
+                      <div className={styles.commentActions}>
+                        <button
+                          onClick={() => {
+                            deleteComment(comment.id);
+                          }}
+                          className={styles.commentDeleteButton}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
                     <div className={styles.commentContent}>{content}</div>

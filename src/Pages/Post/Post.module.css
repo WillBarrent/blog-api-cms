@@ -136,6 +136,11 @@ ol {
 
 .commentInfo {
   display: flex;
+  justify-content: space-between;
+}
+
+.commentUserInfo {
+  display: flex;
   align-items: center;
   gap: 8px;
 
@@ -156,4 +161,14 @@ ol {
 .commentCreatedAt {
   color: #afabab;
   font-size: 14px;
+}
+
+.commentDeleteButton {
+  outline: none;
+  border: none;
+  color: #fff;
+  background-color: red;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
 }
